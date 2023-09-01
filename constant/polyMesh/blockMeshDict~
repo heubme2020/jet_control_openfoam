@@ -1,0 +1,149 @@
+     /*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 0.001;
+
+//5 mm column diameter
+//10 cm length
+
+
+
+//Width of middle square section
+
+
+
+
+//how many cells in the square section
+//how many cells from square section to perimeter
+// how many cells from top to bottom
+
+vertices
+(
+( 1.25 0.0 1.25) // Vertex fiveoclocksqb = 0
+(-1.25 0.0 1.25) // Vertex sevenoclocksqb = 1
+(-1.25 0.0 -1.25) // Vertex elevenoclocksqb = 2
+( 1.25 0.0 -1.25) // Vertex oneoclocksqb = 3
+
+( 1.76776695455285 0.0 1.76776695137989) // Vertex fiveoclockcb = 4
+(-1.76776695455285 0.0 1.76776695137989) // Vertex sevenoclockcb = 5
+(-1.76776695455285 0.0 -1.76776695137989) // Vertex elevenoclockcb = 6
+( 1.76776695455285 0.0 -1.76776695137989) // Vertex oneoclockcb = 7
+
+( 1.25 100 1.25) // Vertex fiveoclocksqt = 8
+(-1.25 100 1.25) // Vertex sevenoclocksqt = 9
+(-1.25 100 -1.25) // Vertex elevenoclocksqt = 10
+( 1.25 100 -1.25) // Vertex oneoclocksqt = 11
+
+( 1.76776695455285 100 1.76776695137989) // Vertex fiveoclockct = 12
+(-1.76776695455285 100 1.76776695137989) // Vertex sevenoclockct = 13
+(-1.76776695455285 100 -1.76776695137989) // Vertex elevenoclockct = 14
+( 1.76776695455285 100 -1.76776695137989) // Vertex oneoclockct = 15
+);
+
+blocks
+(
+//square block
+hex (
+1 0 3 2
+9 8 11 10
+)
+(3 3 10)
+simpleGrading (1 1 1)
+
+//slice1
+hex (
+5 4 0 1
+13 12 8 9
+)
+(3 3 10)
+simpleGrading (1 1 1)
+
+//slice2
+hex (
+1 2 6 5
+9 10 14 13
+)
+(3 3 10)
+simpleGrading (1 1 1)
+
+//slice3
+hex (
+2 3 7 6
+10 11 15 14
+)
+(3 3 10)
+simpleGrading (1 1 1)
+
+//slice4
+hex (
+3 0 4 7
+11 8 12 15
+)
+(3 3 10)
+simpleGrading (1 1 1)
+
+);
+
+
+//create the quarter circles
+edges
+(
+arc 4 5 (0.0 0.0 2.5)
+arc 5 6 (-2.5 0.0 0.0)
+arc 6 7 (0.0 0.0 -2.5)
+arc 7 4 (2.5 0.0 0.0)
+
+arc 12 13 (0.0 100 2.5)
+arc 13 14 (-2.5 100 0.0)
+arc 14 15 (0.0 100 -2.5)
+arc 15 12 (2.5 100 0.0)
+
+);
+
+patches
+(
+patch outlet
+(
+(2 4(0 3 2 1))
+(2 4(0 4 7 3))
+(2 4(4 0 1 5))
+(2 4(1 2 6 5))
+(2 4(3 7 6 2))
+)
+
+patch inlet
+(
+(2 4(8 11 10 9))
+(2 4(8 12 15 11))
+(2 4(12 8 9 13))
+(2 4(9 10 14 13))
+(2 4(11 15 14 10))
+)
+
+wall walls
+(
+(2 4(5 4 12 13))
+(2 4(5 13 14 6))
+(2 4(6 14 15 7))
+(2 4(7 15 12 4))
+)
+
+);
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
